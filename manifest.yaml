@@ -64,7 +64,7 @@ spec:
         spec:
           containers:
           - name: scaledobject-creator
-            image: ghcr.io/alfianabdi/scaledobject-creator:18165d
+            image: ghcr.io/alfianabdi/scaledobject-creator:116efb
             imagePullPolicy: IfNotPresent
             command:
             - --excluded-namespace=aws-load-balancer-controller,calico-apiserver,calico-system,cert-manager,descheduler,external-dns,ingress-nginx,karpenter,keda,kube-system,logging,monitoring,observability,opentelemetry,rabbitmq-system,tigera-operator

@@ -18,6 +18,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 )
@@ -57,6 +58,7 @@ type patchInt32Value struct {
 func main() {
 	defaultKubeconfig := filepath.Join(homedir.HomeDir(), ".kube", "config")
 
+	var incluster *bool = flag.Bool("incluster", true, "Use in cluster authentication")
 	var kubeconfig *string = flag.String("kubeconfig", defaultKubeconfig, "The absolute path to the Kubeconfig")
 	var excludedNamespaces = flag.StringSlice("excluded-namespace", []string{}, "The namespaces to be excluded")
 
@@ -68,8 +70,15 @@ func main() {
 		excludedNamespaceMap[ns] = ns
 	}
 
+	var config *rest.Config
+	var err error
+	if *incluster {
+		config, err = rest.InClusterConfig()
+	} else {
+		config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	}
 	// Client Set for Kubernetes Core and Keda CRs
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+
 	if err != nil {
 		panic(err.Error())
 	}
