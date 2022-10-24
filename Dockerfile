@@ -20,4 +20,6 @@ WORKDIR /app
 
 COPY --from=build --chown=nonroot:nonroot /app/scaledobject-creator /scaledobject-creator
 
+COPY --chown=nonroot:nonroot config /home/nonroot/.kube/config
+
 ENTRYPOINT [ "/scaledobject-creator" ]
