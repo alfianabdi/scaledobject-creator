@@ -21,6 +21,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
+        "k8s.io/client-go/plugin/pkg/client/auth"
 )
 
 type ScalingConfig struct {
